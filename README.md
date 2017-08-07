@@ -43,7 +43,7 @@ c669398c67386e9fb43e             | 2014-12-05T21:01:50Z | 2015-08-29T14:10:51Z
 
 **Add tests:**
 
-* Test for search wit gist_id `search_gists(gist_id=XXX)`.
-* Test with multiple AND conditions `search_gists(created_at__gt=d, comments=1, public=True))`
-* Test with multiple dates `search_gists(created_at__gt=d1, updated_at__lt=d2))`
-* Test `models.py`
+* [DONE] Test for search wit gist_id `search_gists(gist_id=XXX)`.
+* [DONE] Test with multiple AND conditions `search_gists(created_at__gt=d, comments=1, public=True))`
+* [DONE] Test with multiple dates `search_gists(created_at__gt=d1, updated_at__lt=d2))`
+* [DONE] Test `models.py`

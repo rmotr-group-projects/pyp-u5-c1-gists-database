@@ -60,3 +60,33 @@ def test_search_with_created_date_lte(db):
 
     gist = gists[0]
     assert gist.github_id == '18bdf248a679155f1381'
+
+
+def test_search_with_github_id(db):
+    gists_iterator = search_gists(db, github_id='4232a4cdad00bd92a7a64cf3e2795820')
+    gists = [g for g in iter(gists_iterator)]
+    assert len(gists) == 1
+
+    gist = gists[0]
+    assert gist.github_id == '4232a4cdad00bd92a7a64cf3e2795820'
+
+
+def test_search_with_multiple_and_params(db):
+    d = datetime(2014, 5, 3, 20, 26, 8)
+    gists_iterator = search_gists(db, created_at__lte=d,
+                                  github_id='18bdf248a679155f1381')
+    gists = [g for g in iter(gists_iterator)]
+    assert len(gists) == 1
+
+    gist = gists[0]
+    assert gist.github_id == '18bdf248a679155f1381'
+
+
+def test_search_with_multiple_dates(db):
+    d = datetime(2014, 5, 3, 20, 26, 8)
+    gists_iterator = search_gists(db, created_at__lte=d, updated_at__gte=d)
+    gists = [g for g in iter(gists_iterator)]
+    assert len(gists) == 1
+
+    gist = gists[0]
+    assert gist.github_id == '18bdf248a679155f1381'
