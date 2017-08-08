@@ -15,7 +15,7 @@ You are going to use the [GitHub gists API](https://developer.github.com/v3/gist
 ## The Searcher
 Your `search_gists` method should take a `db_connection` parameter (the database connection), as well as a variable number of keyword arguments to use in the search. This function should ultimately return an iterator that pumps out Gist objects with all the appropriate data filled in. These are the various keyword arguments your function should accept:
 
- - `gist_id`
+ - `github_id`
  - `public`
  - `created_at__gt`
  - `created_at__gte`
