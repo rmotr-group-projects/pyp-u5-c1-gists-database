@@ -17,14 +17,14 @@ Your `search_gists` method should take a `db_connection` parameter (the database
 
  - `gist_id`
  - `public`
- - `created_on__gt`
- - `created_on__gte`
- - `created_on__lt`
- - `created_on__lte`
- - `updated_on__gt`
- - `updated_on__gte`
- - `updated_on__lt`
- - `updated_on__lte`
+ - `created_at__gt`
+ - `created_at__gte`
+ - `created_at__lt`
+ - `created_at__lte`
+ - `updated_at__gt`
+ - `updated_at__gte`
+ - `updated_at__lt`
+ - `updated_at__lte`
  - `comments`
 
 **Datetime query parameters:** The keyword arguments starting with `created` and `updated` will be operating such that they will be comparing against the `created_at` and `updated_at` fields using the corresponding comparison:`gt` means greater than, `gte` greater than or equal tho, `lt` less than, `lte` less than or equal to
