@@ -2,13 +2,7 @@ from datetime import datetime
 from gists_database.search import search_gists, build_query
 
 from .fixtures import populated_gists_database as db
-#
-# q1 = "SELECT * FROM gists WHERE datetime(created_at) > datetime(:created_at__gt)"
-# q2 = "SELECT * FROM gists WHERE datetime(created_at) > datetime(:created_at__gt) AND public = :public"
-#
-# def test_queries():
-#     # assert build_query(created_at__gt='2017-05-10')[0] == q1
-#     assert build_query(created_at__gt='2017-05-10', public=True)[0] == q2
+
 
 def test_search_without_parameters_returns_all_gists(db):
     gists_iterator = search_gists(db)
