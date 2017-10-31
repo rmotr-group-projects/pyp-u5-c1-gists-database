@@ -5,7 +5,6 @@ from datetime import datetime
 
 def search_gists(db_connection, **kwargs):
     query = build_query(**kwargs)
-        
     cursor = db_connection.execute(query)
     for row in cursor:
         yield Gist(row)
@@ -24,13 +23,12 @@ def build_query(**kwargs):
     
     for key, val in kwargs.items():
         if isinstance(val,datetime):
-            op = key[-3:] if key[-1:] == 'e' else key[-2:]
-            operator = op_dict[op]
-            field = key[0:-5] if key[-1:] == 'e' else key[0:-4]
+            ii = -1 if key[-1:] == 'e' else 0
+            operator = op_dict[key[-2+ii:]]
+            field = key[0:-4+ii]
             query = query + "and datetime({}) {} datetime('{}')\n".format(field, operator, val)
         else:
-            if isinstance(val, str):
-                val = "'{}'".format(val)
+            val = "'{}'".format(val) if isinstance(val, str) else val
             query = query + 'and {} = {}\n'.format(key, val)
     
     return query
