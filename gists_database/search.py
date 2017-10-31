@@ -2,6 +2,7 @@ from .models import Gist
 import sqlite3
 from datetime import datetime
 
+
 def search_gists(db_connection, **kwargs):
     query = build_query(**kwargs)
         
@@ -24,8 +25,8 @@ def build_query(**kwargs):
     for key, val in kwargs.items():
         if isinstance(val,datetime):
             op = key[-3:] if key[-1:] == 'e' else key[-2:]
-            field = key[0:-5] if key[-1:] == 'e' else key[0:-4]
             operator = op_dict[op]
+            field = key[0:-5] if key[-1:] == 'e' else key[0:-4]
             query = query + "and datetime({}) {} datetime('{}')\n".format(field, operator, val)
         else:
             if isinstance(val, str):
