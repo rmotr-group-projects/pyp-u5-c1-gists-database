@@ -10,12 +10,18 @@ def import_gists_to_database(db, username, commit=True):
     :public, :created_at, :updated_at, :comments, :comments_url
     );"""
     
+    # Get all gists for passed user
     r = requests.get('https://api.github.com/users/{}/gists'.format(username))
+    # Raise error if fail to receive data for user
     r.raise_for_status()
+    # Convert all gists to JSON
     all_gists = r.json()
     
+    # Loop through individual gists
     for gist in all_gists:
+        # Execute saved insert query to store each gist in the db passed
         db.execute(query, gist)
 
+    # If passed value of commit is set to true commit inserts
     if commit:
         db.commit()
