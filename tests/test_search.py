@@ -1,5 +1,5 @@
 from datetime import datetime
-from gists_database.search import search_gists, build_query
+from gists_database.search import search_gists
 
 from .fixtures import populated_gists_database as db
 
