@@ -17,7 +17,7 @@ def build_query(**kwargs):
         'lte': '<='
     }
     
-    for key, value in kwargs.iteritems():
+    for key, value in kwargs.items():
         fields = key.split('__')
         if len(fields) > 1:
             ops = ops_dict.get(fields[1], "=")
