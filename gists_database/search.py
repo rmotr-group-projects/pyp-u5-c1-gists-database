@@ -12,28 +12,38 @@ def search_gists(db_connection, **kwargs):
 
 
 def build_query(db, **kwargs):
+    # Prefix for the query if there are no kwargs it returns all
     pre_query = ("SELECT * FROM gists")
+    # Add a querylist to add multiple search parameters
+    query_list = []
+    # If there are kwargs append the WHERE to the pre_query
     if kwargs:
         pre_query += ' WHERE'
-    querylist = []
+    # Check for search parameters in kwargs and add them to querylist
     for kwarg in kwargs:
-        if kwarg[:10] == 'created_at':
+        if kwarg.startswith(
+                            'created_at') or kwarg.startswith(
+                            'updated_at__gte'):
             time = kwargs[kwarg]
             search = " date(created_at) {} datetime('{}')"
             if kwarg == 'created_at__gt':
                 op = '>'
-                querylist.append(search.format(op, time))
+                query_list.append(search.format(op, time))
             if kwarg == 'created_at__gte':
                 op = '>='
-                querylist.append(search.format(op, time))
+                query_list.append(search.format(op, time))
             if kwarg == 'created_at__lt':
                 op = '<'
-                querylist.append(search.format(op, time))
+                query_list.append(search.format(op, time))
             if kwarg == 'created_at__lte':
                 op = '<='
-                querylist.append(search.format(op, time))
-        if kwarg == 'github_id':
-            querylist.append(" github_id = '{}'".format(kwargs[kwarg]))
+                query_list.append(search.format(op, time))
+            if kwarg == 'updated_at__gte':
+                op = '>='
+                query_list.append(" date(updated_at) {} datetime('{}')".format(
+                                  op, time))
+        else:
+            query_list.append(" {} = '{}'".format(kwarg, kwargs[kwarg]))
 
-    query = pre_query + ' AND'.join(querylist)
+    query = pre_query + ' AND'.join(query_list)
     return db.execute(query)
