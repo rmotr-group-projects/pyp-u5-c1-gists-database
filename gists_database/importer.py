@@ -1,7 +1,6 @@
 # Code in this file is from class on 11/1/17
 import requests
 from requests import exceptions
-from .config import TABLE_NAME
 
 API_ENDPOINT = 'https://api.github.com/users/{username}/gists'
 
@@ -33,6 +32,7 @@ def import_gists_to_database(db, username, commit=True):
             "github_id": gist['id'],
             "html_url": gist['html_url'],
             "git_pull_url": gist['git_pull_url'],
+            "git_push_url": gist['git_push_url'],
             "commits_url": gist['commits_url'],
             "forks_url": gist['forks_url'],
             "public": gist['public'],
@@ -41,6 +41,6 @@ def import_gists_to_database(db, username, commit=True):
             "comments": gist['comments'],
             "comments_url": gist['comments_url'],
         }
-        db.execute(INSERT_GIST_QUERY, params)
+        db.execute(INSERT_GIST_QUERY.format(table='gists'), params)
         if commit:
             db.commit()
