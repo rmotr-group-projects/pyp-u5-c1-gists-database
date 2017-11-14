@@ -15,17 +15,19 @@ def search_gists(db_connection, **kwargs):
     values = []
     if len(kwargs) > 0:
         query += ' WHERE '
-    for key, value in kwargs.items():
-        if 'github_id' in kwargs:
-            values.append(value)
-            query += 'github_id = ?'
-            if len(kwargs) > 1:
-                query += ' AND '
-        if 'created_at__' in key:
-            operator = COMPARISON_OPERATORS[key.split('__')[1]]
-            values.append(value)
-            query += ' created_at {} ?'.format(operator)
 
+    for i, (key, value) in enumerate(kwargs.items()):
+        if key == 'github_id':
+            query += 'github_id = ?'
+        if 'created_at__' in key or 'updated_at__' in key:
+            operator = COMPARISON_OPERATORS[key.split('__')[1]]
+            date_type = key.split('__')[0]
+            query += 'datetime({}) {} datetime(?)'.format(date_type, operator)
+
+        values.append(value)
+        if len(kwargs) > 1 and i < (len(kwargs) - 1):
+            query += ' AND '
+    print('query', query)
     cur.execute(query, tuple(values))
 
     for row in cur:
