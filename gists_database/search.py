@@ -14,8 +14,7 @@ def search_gists(db_connection, **kwargs):
     QUERY_GIST = 'SELECT * FROM gists'
     
     attributes = ['created_at', 'updated_at', 'github_id']
-    
-    values = {}
+
     logic = ''
     string = ''
     
