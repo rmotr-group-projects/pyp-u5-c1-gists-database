@@ -1,12 +1,10 @@
 import requests
-import sqlite3
 import os
 from os.path import dirname as dot
 
 BASE_PROJECT_PATH = dot(dot(__file__))
 DATABASE_SCHEMA_PATH = os.path.join(BASE_PROJECT_PATH, 'schema.sql')
 
-API_ENDPOINT = 'https://api.github.com'
 
 INSERT_QUERY = """
     INSERT INTO gists 
@@ -18,14 +16,14 @@ INSERT_QUERY = """
 
 
 def import_gists_to_database(db, username, commit=True):
-    USER_GIST_URL = 'https://api.github.com/users/{username}/gists'.format(username=username)
+    user_gist_url = 'https://api.github.com/users/{username}/gists'.format(username=username)
 
-    r = requests.get(USER_GIST_URL)
+    r = requests.get(user_gist_url)
     r.raise_for_status()
 
-    r = r.json()
+    # r = r.json()
 
-    for data in r:
+    for data in r.json():
         fields = {
             'github_id': data['id'], 'html_url': data['html_url'],
             'git_pull_url': data['git_pull_url'], 'git_push_url': data['git_push_url'],
@@ -34,13 +32,7 @@ def import_gists_to_database(db, username, commit=True):
             'updated_at': data['updated_at'], 'comments': data['comments'],
             'comments_url': data['comments_url'],
         }
-        cursor = db.execute(INSERT_QUERY, fields)
+        db.execute(INSERT_QUERY, fields)
 
     if commit:
         db.commit()
-
-
-if __name__ == '__main__':
-    with sqlite3.connect("gists.sqlite") as db:
-        import_gists_to_database(db, "AllenAnthes", True)
-
