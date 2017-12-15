@@ -48,4 +48,7 @@ def build_query(**kwargs):
 # REMOVE ME - TO HERE />
 
 def search_gists(db_connection, **kwargs):
-    pass
+    query, params = build_query(**kwargs)
+    cursor = db_connection.execute(query, params)
+    for gist in cursor:
+        yield Gist(gist)
