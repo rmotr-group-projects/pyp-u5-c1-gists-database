@@ -6,16 +6,12 @@ def get_operator(operator_code):
     Return the comparison operator based on string code in keyword argument
     """
 
-    if operator_code == 'gt':
-        return '>'
-
-    elif operator_code == 'gte':
-        return '>='
-
-    elif operator_code == 'lt':
-        return '<'
-
-    return '<='
+    return {
+        'gt': '>',
+        'gte': '>=',
+        'lt': '<',
+        'lte': '<='
+        }[operator_code]
 
 
 def where_statement(kwarg):
@@ -49,7 +45,7 @@ def search_gists(db_connection, **kwargs):
         query = "SELECT * FROM gists"
         cursor = db_connection.execute(query)
 
-    # build conditional query given keyword arguments
+    # build conditional query if keyword arguments are given
     else:
 
         for count, kwarg in enumerate(kwargs):
