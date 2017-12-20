@@ -33,6 +33,8 @@ def search_gists(db_connection, **kwargs):
     for gist in results:
         yield  Gist(gist)
 
+
+
 #db = sqlite3.connect('schema.db')
 # from tests.fixtures import populated_gists_database as db
 # d = datetime(2014, 5, 3, 20, 26, 8)
@@ -44,22 +46,6 @@ def search_gists(db_connection, **kwargs):
 
 # gist = gists[0]
 # print(gist.github_id) # == '18bdf248a679155f1381'
-
-
-
-'''
-db_connection = sqlite3.connect('schema.db')
-d1 = datetime(2017,5,10)
-result = search_gists(db_connection, created_at__gt = d1 , created_at__gte = d1)
-#print(result)
-
-for row in result:
-    print (row)
-
-# the values after  = : are coming from kwargs, the value after and are sql query column
-'''
-
-
 
 
 

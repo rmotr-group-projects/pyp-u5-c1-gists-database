@@ -28,15 +28,15 @@ def import_gists_to_database(db, username, commit=True):
         
 
 # #pprint.pprint(json_file[0]['id'])
-db = sqlite3.connect('schema.db')
-username = 'gvanrossum'
-import_gists_to_database(db, username)
-cursor = db.cursor()
-results = db.execute('SELECT * FROM gists')
-print("gists:")
-#print(results.fetchone())
-for row in results:
-    print row
+# db = sqlite3.connect('schema.db')
+# username = 'gvanrossum'
+# import_gists_to_database(db, username)
+# cursor = db.cursor()
+# results = db.execute('SELECT * FROM gists')
+# print("gists:")
+# #print(results.fetchone())
+# for row in results:
+#     print row
 
 
 
