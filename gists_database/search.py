@@ -32,15 +32,15 @@ def search_gists(db_connection, **kwargs):
     for gist in results:
         yield  Gist(gist)
 
-db = sqlite3.connect('schema.db')
-d = datetime(2014, 5, 3, 20, 26, 8)
-gists_iterator = search_gists(db, created_at__lte=d,
-                              github_id='18bdf248a679155f1381')
-gists = [g for g in iter(gists_iterator)]
-print(len(gists))  #== 1
+# db = sqlite3.connect('schema.db')
+# d = datetime(2014, 5, 3, 20, 26, 8)
+# gists_iterator = search_gists(db, created_at__lte=d,
+#                               github_id='18bdf248a679155f1381')
+# gists = [g for g in iter(gists_iterator)]
+# print(len(gists))  #== 1
 
-gist = gists[0]
-print(gist.github_id) # == '18bdf248a679155f1381'
+# gist = gists[0]
+# print(gist.github_id) # == '18bdf248a679155f1381'
 
 
 
